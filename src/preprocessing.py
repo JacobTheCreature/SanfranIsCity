@@ -49,7 +49,7 @@ def preprocess_needle_cases(df: pd.DataFrame) -> pd.DataFrame:
     date_cols = ['opened', 'closed', 'updated']
     for col in date_cols:
         if col in df.columns:
-            df[col] = pd.to_datetime(df[col], errors='coerce')
+            df[col] = pd.to_datetime(df[col], format='%m/%d/%Y %I:%M:%S %p', errors='coerce')
    
     return df
 
@@ -61,7 +61,7 @@ def preprocess_homeless_counts(df: pd.DataFrame) -> pd.DataFrame:
    
     # Convert date column to datetime
     if 'observed_month' in df.columns:
-        df['observed_month'] = pd.to_datetime(df['observed_month'], errors='coerce')
+        df['observed_month'] = pd.to_datetime(df['observed_month'], format='%Y %b %d %I:%M:%S %p', errors='coerce')
    
     return df
 
