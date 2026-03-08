@@ -1,0 +1,21 @@
+antecedents,consequents,support,confidence,lift
+"district=MISSION, supervisor=9.0",sf_find_neighborhood=Mission,0.0544,0.941,15.954
+sf_find_neighborhood=Mission,"district=MISSION, supervisor=9.0",0.0544,0.922,15.954
+sf_find_neighborhood=Mission,"district=MISSION, tents_binned=tents_low, supervisor=9.0, underserved=False, structures_binned=structures_low",0.0544,0.922,15.954
+"sf_find_neighborhood=Mission, structures_binned=structures_low","district=MISSION, supervisor=9.0, tents_binned=tents_low, underserved=False",0.0544,0.922,15.954
+"sf_find_neighborhood=Mission, structures_binned=structures_low, underserved=False","district=MISSION, tents_binned=tents_low, supervisor=9.0",0.0544,0.922,15.954
+"sf_find_neighborhood=Mission, structures_binned=structures_low, tents_binned=tents_low","district=MISSION, supervisor=9.0, underserved=False",0.0544,0.922,15.954
+"district=MISSION, tents_binned=tents_low, supervisor=9.0","sf_find_neighborhood=Mission, structures_binned=structures_low, underserved=False",0.0544,0.941,15.954
+"sf_find_neighborhood=Mission, underserved=False","district=MISSION, structures_binned=structures_low, tents_binned=tents_low, supervisor=9.0",0.0544,0.922,15.954
+"sf_find_neighborhood=Mission, tents_binned=tents_low","district=MISSION, supervisor=9.0, structures_binned=structures_low, underserved=False",0.0544,0.922,15.954
+"district=MISSION, supervisor=9.0","sf_find_neighborhood=Mission, structures_binned=structures_low, tents_binned=tents_low, underserved=False",0.0544,0.941,15.954
+"district=MISSION, structures_binned=structures_low, tents_binned=tents_low, supervisor=9.0","sf_find_neighborhood=Mission, underserved=False",0.0544,0.941,15.954
+"district=MISSION, supervisor=9.0, tents_binned=tents_low, underserved=False","sf_find_neighborhood=Mission, structures_binned=structures_low",0.0544,0.941,15.954
+"sf_find_neighborhood=Mission, tents_binned=tents_low, underserved=False","district=MISSION, structures_binned=structures_low, supervisor=9.0",0.0544,0.922,15.954
+"district=MISSION, structures_binned=structures_low, supervisor=9.0","sf_find_neighborhood=Mission, tents_binned=tents_low, underserved=False",0.0544,0.941,15.954
+"district=MISSION, supervisor=9.0, underserved=False","sf_find_neighborhood=Mission, structures_binned=structures_low, tents_binned=tents_low",0.0544,0.941,15.954
+"sf_find_neighborhood=Mission, structures_binned=structures_low, tents_binned=tents_low, underserved=False","district=MISSION, supervisor=9.0",0.0544,0.922,15.954
+"district=MISSION, supervisor=9.0, structures_binned=structures_low, underserved=False","sf_find_neighborhood=Mission, tents_binned=tents_low",0.0544,0.941,15.954
+"district=MISSION, tents_binned=tents_low, supervisor=9.0, underserved=False, structures_binned=structures_low",sf_find_neighborhood=Mission,0.0544,0.941,15.954
+"district=MISSION, supervisor=9.0","sf_find_neighborhood=Mission, tents_binned=tents_low, underserved=False",0.0544,0.941,15.954
+"district=MISSION, supervisor=9.0, tents_binned=tents_low, underserved=False",sf_find_neighborhood=Mission,0.0544,0.941,15.954
