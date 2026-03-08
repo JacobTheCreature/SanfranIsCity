@@ -25,11 +25,16 @@ def find_nearest_facility(target_gdf, facility_gdf):
 
 
 def count_facilities_within_radius(target_gdf, facility_gdf, radius=500):
-    counts = []
-    for target_point in target_gdf.geometry:
-        distances = facility_gdf.geometry.apply(lambda facility: target_point.distance(facility) * 111000 * np.cos(np.radians(37.77)))
-        count = (distances <= radius).sum()
-        counts.append(count)
+    # Use vectorized operations for better performance
+    target_coords = np.array(list(target_gdf.geometry.apply(lambda x: (x.x, x.y))))
+    facility_coords = np.array(list(facility_gdf.geometry.apply(lambda x: (x.x, x.y))))
+    
+    # Build KDTree for fast radius queries
+    tree = cKDTree(facility_coords)
+    radius_degrees = radius / (111000 * np.cos(np.radians(37.77)))
+    
+    # Count facilities within radius for each target point
+    counts = [len(tree.query_ball_point(point, radius_degrees)) for point in target_coords]
     return counts
 
 

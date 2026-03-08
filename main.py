@@ -43,11 +43,11 @@ def main():
         # Spacial integration
         needles_gdf, encampments_gdf, bathrooms_gdf = prepare_geodataframes(needle_cases_clean, homeless_encampments_clean, bathrooms_clean)
 
-        spacial_needle_dataset, spacial_bathroom_dataset, spacial_encampment_dataset = integrate_spatial_data(needles_gdf, encampments_gdf, bathrooms_gdf)
+        spacial_needle_dataset, spacial_encampment_dataset, spacial_bathroom_dataset = integrate_spatial_data(needles_gdf, encampments_gdf, bathrooms_gdf)
 
         print_dataset_info(spacial_needle_dataset, 'spacial needles')
-        print_dataset_info(spacial_bathroom_dataset, 'spacial bathroom')
         print_dataset_info(spacial_encampment_dataset, 'spacial encampments')
+        print_dataset_info(spacial_bathroom_dataset, 'spacial bathroom')
         
         # Save to CSV
         processed_dir.mkdir(parents=True, exist_ok=True)

@@ -45,11 +45,16 @@ def preprocess_needle_cases(df: pd.DataFrame) -> pd.DataFrame:
     df = standardize_column_names(df)
     df = clean_coordinates(df, lat_col='latitude', lon_col='longitude')
    
-    # Convert date columns to datetime
+    # Convert date columns to datetime for temporal analysis
     date_cols = ['opened', 'closed', 'updated']
     for col in date_cols:
         if col in df.columns:
             df[col] = pd.to_datetime(df[col], format='%m/%d/%Y %I:%M:%S %p', errors='coerce')
+   
+    # Keep only columns used in analysis
+    keep_cols = ['latitude', 'longitude', 'neighborhood', 'supervisor_district', 'status', 'opened', 'closed', 'updated']
+    existing_keep_cols = [col for col in keep_cols if col in df.columns]
+    df = df[existing_keep_cols]
    
     return df
 
@@ -59,9 +64,14 @@ def preprocess_homeless_counts(df: pd.DataFrame) -> pd.DataFrame:
     df = standardize_column_names(df)
     df = clean_coordinates(df, lat_col='latitude', lon_col='longitude')
    
-    # Convert date column to datetime
+    # Convert date column to datetime for temporal analysis
     if 'observed_month' in df.columns:
         df['observed_month'] = pd.to_datetime(df['observed_month'], format='%Y %b %d %I:%M:%S %p', errors='coerce')
+   
+    # Keep only columns used in analysis
+    keep_cols = ['latitude', 'longitude', 'district', 'sf_find_neighborhood', 'supervisor', 'tents', 'structures', 'observed_month']
+    existing_keep_cols = [col for col in keep_cols if col in df.columns]
+    df = df[existing_keep_cols]
    
     return df
 
@@ -70,5 +80,10 @@ def preprocess_homeless_counts(df: pd.DataFrame) -> pd.DataFrame:
 def preprocess_bathrooms(df: pd.DataFrame) -> pd.DataFrame:
     df = standardize_column_names(df)
     df = clean_coordinates(df, lat_col='latitude', lon_col='longitude')
+   
+    # Keep only columns used in analysis
+    keep_cols = ['latitude', 'longitude', 'resource_type', 'access', 'supervisor_district', 'analysis_neighborhood']
+    existing_keep_cols = [col for col in keep_cols if col in df.columns]
+    df = df[existing_keep_cols]
    
     return df

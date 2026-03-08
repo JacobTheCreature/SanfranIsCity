@@ -1,21 +1,21 @@
 antecedents,consequents,support,confidence,lift
-"kmeans_cluster=3, supervisor_district=10.0","analysis_neighborhood=Bayview Hunters Point, access=publicly_accessible",0.0642,0.912,14.206
-analysis_neighborhood=Bayview Hunters Point,"kmeans_cluster=3, supervisor_district=10.0, access=publicly_accessible",0.0642,0.912,14.206
-"analysis_neighborhood=Bayview Hunters Point, access=publicly_accessible","kmeans_cluster=3, supervisor_district=10.0",0.0642,1.0,14.206
-"analysis_neighborhood=Bayview Hunters Point, needles_within_500m_binned=needles_within_500m_low","supervisor_district=10.0, kmeans_cluster=3, access=publicly_accessible",0.0642,0.912,14.206
-"kmeans_cluster=3, supervisor_district=10.0, needles_within_500m_binned=needles_within_500m_low","analysis_neighborhood=Bayview Hunters Point, access=publicly_accessible",0.0642,0.912,14.206
-"analysis_neighborhood=Bayview Hunters Point, access=publicly_accessible","kmeans_cluster=3, supervisor_district=10.0, needles_within_500m_binned=needles_within_500m_low",0.0642,1.0,14.206
-"kmeans_cluster=3, supervisor_district=10.0","analysis_neighborhood=Bayview Hunters Point, access=publicly_accessible, needles_within_500m_binned=needles_within_500m_low",0.0642,0.912,14.206
-analysis_neighborhood=Bayview Hunters Point,"supervisor_district=10.0, kmeans_cluster=3, access=publicly_accessible, needles_within_500m_binned=needles_within_500m_low",0.0642,0.912,14.206
-"kmeans_cluster=3, supervisor_district=10.0, access=publicly_accessible",analysis_neighborhood=Bayview Hunters Point,0.0642,1.0,14.206
-"supervisor_district=10.0, kmeans_cluster=3, access=publicly_accessible","analysis_neighborhood=Bayview Hunters Point, needles_within_500m_binned=needles_within_500m_low",0.0642,1.0,14.206
-"kmeans_cluster=3, supervisor_district=10.0","analysis_neighborhood=Bayview Hunters Point, needles_within_500m_binned=needles_within_500m_low",0.0704,1.0,14.206
-"kmeans_cluster=3, supervisor_district=10.0, needles_within_500m_binned=needles_within_500m_low",analysis_neighborhood=Bayview Hunters Point,0.0704,1.0,14.206
-analysis_neighborhood=Bayview Hunters Point,"kmeans_cluster=3, supervisor_district=10.0, needles_within_500m_binned=needles_within_500m_low",0.0704,1.0,14.206
 analysis_neighborhood=Bayview Hunters Point,"kmeans_cluster=3, supervisor_district=10.0",0.0704,1.0,14.206
+"needles_within_500m_binned=needles_within_500m_low, analysis_neighborhood=Bayview Hunters Point","kmeans_cluster=3, access=publicly_accessible, supervisor_district=10.0",0.0642,0.912,14.206
+"analysis_neighborhood=Bayview Hunters Point, access=publicly_accessible","kmeans_cluster=3, needles_within_500m_binned=needles_within_500m_low, supervisor_district=10.0",0.0642,1.0,14.206
 "kmeans_cluster=3, supervisor_district=10.0",analysis_neighborhood=Bayview Hunters Point,0.0704,1.0,14.206
-"analysis_neighborhood=Bayview Hunters Point, needles_within_500m_binned=needles_within_500m_low","kmeans_cluster=3, supervisor_district=10.0",0.0704,1.0,14.206
-"analysis_neighborhood=Bayview Hunters Point, access=publicly_accessible, needles_within_500m_binned=needles_within_500m_low","kmeans_cluster=3, supervisor_district=10.0",0.0642,1.0,14.206
-"supervisor_district=10.0, kmeans_cluster=3, access=publicly_accessible, needles_within_500m_binned=needles_within_500m_low",analysis_neighborhood=Bayview Hunters Point,0.0642,1.0,14.206
+analysis_neighborhood=Bayview Hunters Point,"kmeans_cluster=3, needles_within_500m_binned=needles_within_500m_low, access=publicly_accessible, supervisor_district=10.0",0.0642,0.912,14.206
+"kmeans_cluster=3, supervisor_district=10.0","needles_within_500m_binned=needles_within_500m_low, analysis_neighborhood=Bayview Hunters Point, access=publicly_accessible",0.0642,0.912,14.206
+"kmeans_cluster=3, access=publicly_accessible, supervisor_district=10.0","needles_within_500m_binned=needles_within_500m_low, analysis_neighborhood=Bayview Hunters Point",0.0642,1.0,14.206
+analysis_neighborhood=Bayview Hunters Point,"kmeans_cluster=3, access=publicly_accessible, supervisor_district=10.0",0.0642,0.912,14.206
+"kmeans_cluster=3, needles_within_500m_binned=needles_within_500m_low, supervisor_district=10.0",analysis_neighborhood=Bayview Hunters Point,0.0704,1.0,14.206
+analysis_neighborhood=Bayview Hunters Point,"kmeans_cluster=3, needles_within_500m_binned=needles_within_500m_low, supervisor_district=10.0",0.0704,1.0,14.206
+"needles_within_500m_binned=needles_within_500m_low, analysis_neighborhood=Bayview Hunters Point","kmeans_cluster=3, supervisor_district=10.0",0.0704,1.0,14.206
+"kmeans_cluster=3, supervisor_district=10.0","needles_within_500m_binned=needles_within_500m_low, analysis_neighborhood=Bayview Hunters Point",0.0704,1.0,14.206
+"analysis_neighborhood=Bayview Hunters Point, access=publicly_accessible","kmeans_cluster=3, supervisor_district=10.0",0.0642,1.0,14.206
+"kmeans_cluster=3, supervisor_district=10.0","analysis_neighborhood=Bayview Hunters Point, access=publicly_accessible",0.0642,0.912,14.206
+"kmeans_cluster=3, access=publicly_accessible, supervisor_district=10.0",analysis_neighborhood=Bayview Hunters Point,0.0642,1.0,14.206
+"kmeans_cluster=3, needles_within_500m_binned=needles_within_500m_low, access=publicly_accessible, supervisor_district=10.0",analysis_neighborhood=Bayview Hunters Point,0.0642,1.0,14.206
+"needles_within_500m_binned=needles_within_500m_low, analysis_neighborhood=Bayview Hunters Point, access=publicly_accessible","kmeans_cluster=3, supervisor_district=10.0",0.0642,1.0,14.206
+"kmeans_cluster=3, needles_within_500m_binned=needles_within_500m_low, supervisor_district=10.0","analysis_neighborhood=Bayview Hunters Point, access=publicly_accessible",0.0642,0.912,14.206
 "kmeans_cluster=3, needles_within_500m_binned=needles_within_500m_low","analysis_neighborhood=Bayview Hunters Point, access=publicly_accessible",0.0642,0.886,13.8
-kmeans_cluster=3,"analysis_neighborhood=Bayview Hunters Point, supervisor_district=10.0",0.0704,0.971,13.8
+"analysis_neighborhood=Bayview Hunters Point, access=publicly_accessible","kmeans_cluster=3, needles_within_500m_binned=needles_within_500m_low",0.0642,1.0,13.8
