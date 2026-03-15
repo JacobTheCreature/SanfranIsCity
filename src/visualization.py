@@ -460,36 +460,7 @@ def create_spatiotemporal_map(df, date_col='opened', title='Spatio-Temporal Map'
     return m
 
 
-def plot_association_rules(rules_df, title='Top Association Rules', save_path=None):
-    if len(rules_df) == 0:
-        return None
-    
-    fig, ax = plt.subplots(figsize=(12, 8))
-    
-    top_rules = rules_df.head(15)
-    scatter = ax.scatter(top_rules['support'], top_rules['confidence'], 
-                        s=top_rules['lift']*100, c=top_rules['lift'], 
-                        cmap='viridis', alpha=0.6, edgecolors='black', linewidth=1)
-    
-    ax.set_xlabel('Support', fontsize=12)
-    ax.set_ylabel('Confidence', fontsize=12)
-    ax.set_title(title, fontsize=14, fontweight='bold')
-    
-    cbar = plt.colorbar(scatter, ax=ax)
-    cbar.set_label('Lift', fontsize=12)
-    
-    plt.tight_layout()
-    
-    if save_path:
-        plt.savefig(save_path, dpi=300, bbox_inches='tight')
-        plt.close()
-    else:
-        plt.show()
-    
-    return fig
-
-
-# ==================== TEMPORAL VISUALIZATIONS ====================
+# ==================== TEMPORAL VISUALIZATIONS ==
 
 def plot_time_series(df, date_col='opened', title='Time Series', save_path=None, freq='D'):
     """
@@ -1120,36 +1091,7 @@ def plot_correlation_heatmap(df, title='Feature Correlation Heatmap', save_path=
     return fig
 
 
-def plot_association_rules(rules_df, title='Top Association Rules', save_path=None):
-    if len(rules_df) == 0:
-        return None
-    
-    fig, ax = plt.subplots(figsize=(12, 8))
-    
-    top_rules = rules_df.head(15)
-    scatter = ax.scatter(top_rules['support'], top_rules['confidence'], 
-                        s=top_rules['lift']*100, c=top_rules['lift'], 
-                        cmap='viridis', alpha=0.6, edgecolors='black', linewidth=1)
-    
-    ax.set_xlabel('Support', fontsize=12)
-    ax.set_ylabel('Confidence', fontsize=12)
-    ax.set_title(title, fontsize=14, fontweight='bold')
-    
-    cbar = plt.colorbar(scatter, ax=ax)
-    cbar.set_label('Lift', fontsize=12)
-    
-    plt.tight_layout()
-    
-    if save_path:
-        plt.savefig(save_path, dpi=300, bbox_inches='tight')
-        plt.close()
-    else:
-        plt.show()
-    
-    return fig
-
-
-def generate_all_visualizations(needle_df, encampment_df, bathroom_df, needle_rules, encampment_rules, bathroom_rules):
+def generate_all_visualizations(needle_df, encampment_df, bathroom_df):
     output_dir = Path("outputs/figures")
     output_dir.mkdir(parents=True, exist_ok=True)
     
@@ -1254,19 +1196,7 @@ def generate_all_visualizations(needle_df, encampment_df, bathroom_df, needle_ru
     plot_correlation_heatmap(bathroom_df, 'Bathrooms - Feature Correlations',
                             output_dir / 'bathrooms_correlation.png')
     
-    # ==================== ASSOCIATION RULES ====================
-    print("\nGenerating association rule visualizations...")
-    if len(needle_rules) > 0:
-        plot_association_rules(needle_rules, 'Needle Case Association Rules', 
-                              output_dir / 'needles_rules.png')
-    if len(encampment_rules) > 0:
-        plot_association_rules(encampment_rules, 'Encampment Association Rules', 
-                              output_dir / 'encampments_rules.png')
-    if len(bathroom_rules) > 0:
-        plot_association_rules(bathroom_rules, 'Bathroom Association Rules', 
-                              output_dir / 'bathrooms_rules.png')
-    
-    # ==================== INTERACTIVE MAPS ====================
+    # ==================== INTERACTIVE MAPS ==
     print("\nGenerating interactive maps...")
     create_folium_heatmap(needle_df, 'Needle Heatmap', output_dir / 'needles_heatmap.html')
     create_folium_cluster_map(needle_df, 'kmeans_cluster', 'Needle Clusters', 
