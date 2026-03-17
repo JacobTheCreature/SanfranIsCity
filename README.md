@@ -92,3 +92,7 @@ Here are some interesting insights that emerge when viewing the statistical char
 - Only 3 neighborhoods account for the vast majority of exposed needles (Tenderloin, SoMa, Mission)
 - The dense urban part of San Francisco has the majority of needle incidents while the residential areas havev significantly less
 - Encampments with a high density of needles indicate inadequate disposal services, negative culture, and could be a sign of malicious individuals.
+
+### AI Acknowledgement
+
+AI copilot for basic code completion and SKlearn fundamentals. It was also used in generating the more complex visualizations.
