@@ -2,8 +2,6 @@ import pandas as pd
 import numpy as np
 from typing import Tuple
 
-
-
 # Remove invalid coordinates (0,0 or missing values)
 def clean_coordinates(df: pd.DataFrame, lat_col: str = 'Latitude', lon_col: str = 'Longitude') -> pd.DataFrame:
     # Convert to numeric, coercing errors to NaN
@@ -28,18 +26,12 @@ def clean_coordinates(df: pd.DataFrame, lat_col: str = 'Latitude', lon_col: str 
    
     return df_clean
 
-
-
 # Make all the column names lowercase and with underscores
 def standardize_column_names(df: pd.DataFrame) -> pd.DataFrame:
     df.columns = df.columns.str.lower().str.replace(' ', '_')
     return df
 
-
-
-# Cleaning the actual datasets functions
-
-
+### Cleaning the actual datasets functions ###
 
 def preprocess_needle_cases(df: pd.DataFrame) -> pd.DataFrame:
     df = standardize_column_names(df)
@@ -58,8 +50,6 @@ def preprocess_needle_cases(df: pd.DataFrame) -> pd.DataFrame:
    
     return df
 
-
-
 def preprocess_homeless_counts(df: pd.DataFrame) -> pd.DataFrame:
     df = standardize_column_names(df)
     df = clean_coordinates(df, lat_col='latitude', lon_col='longitude')
@@ -74,8 +64,6 @@ def preprocess_homeless_counts(df: pd.DataFrame) -> pd.DataFrame:
     df = df[existing_keep_cols]
    
     return df
-
-
 
 def preprocess_bathrooms(df: pd.DataFrame) -> pd.DataFrame:
     df = standardize_column_names(df)

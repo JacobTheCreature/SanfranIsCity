@@ -28,14 +28,12 @@ def plot_cluster_scatter(df, cluster_col='kmeans_cluster', title='Cluster Map', 
     for idx, cluster in enumerate(unique_clusters):
         cluster_data = df[df[cluster_col] == cluster]
         label = f'Cluster {cluster} (n={len(cluster_data)})' if cluster != -1 else f'Noise (n={len(cluster_data)})'
-        ax.scatter(cluster_data['longitude'], cluster_data['latitude'], 
-                  c=[colors[idx]], label=label, alpha=0.7, s=50, edgecolors='black', linewidth=0.5)
+        ax.scatter(cluster_data['longitude'], cluster_data['latitude'], c=[colors[idx]], label=label, alpha=0.7, s=50, edgecolors='black', linewidth=0.5)
     
     ax.set_xlabel('Longitude', fontsize=13)
     ax.set_ylabel('Latitude', fontsize=13)
     ax.set_title(title, fontsize=15, fontweight='bold', pad=20)
-    ax.legend(bbox_to_anchor=(1.05, 1), loc='upper left', fontsize=10, 
-             frameon=True, fancybox=True, shadow=True)
+    ax.legend(bbox_to_anchor=(1.05, 1), loc='upper left', fontsize=10, frameon=True, fancybox=True, shadow=True)
     ax.grid(True, alpha=0.3, linestyle='--')
     plt.tight_layout()
     
@@ -52,10 +50,7 @@ def plot_spatial_distribution(df, title='Spatial Distribution', save_path=None):
     fig, ax = plt.subplots(figsize=(16, 10))
     
     # Create density-based coloring
-    scatter = ax.scatter(df['longitude'], df['latitude'], 
-                        alpha=0.5, s=30, c='crimson', 
-                        edgecolors='darkred', linewidth=0.4,
-                        cmap='hot_r')
+    scatter = ax.scatter(df['longitude'], df['latitude'], alpha=0.5, s=30, c='crimson', edgecolors='darkred', linewidth=0.4, cmap='hot_r')
     
     ax.set_xlabel('Longitude', fontsize=13)
     ax.set_ylabel('Latitude', fontsize=13)
@@ -64,10 +59,7 @@ def plot_spatial_distribution(df, title='Spatial Distribution', save_path=None):
     ax.set_facecolor('#f0f0f0')
     
     # Add count annotation
-    ax.text(0.02, 0.98, f'Total: {len(df):,} incidents', 
-            transform=ax.transAxes, fontsize=12, 
-            verticalalignment='top',
-            bbox=dict(boxstyle='round', facecolor='white', alpha=0.8))
+    ax.text(0.02, 0.98, f'Total: {len(df):,} incidents', transform=ax.transAxes, fontsize=12, verticalalignment='top', bbox=dict(boxstyle='round', facecolor='white', alpha=0.8))
     
     plt.tight_layout()
     
@@ -84,8 +76,7 @@ def plot_distance_histogram(df, col='dist_to_bathroom_m', title='Distance Distri
     fig, ax = plt.subplots(figsize=(14, 7))
     
     data = df[col].dropna()
-    n, bins, patches = ax.hist(data, bins=50, color='steelblue', 
-                               edgecolor='black', alpha=0.7, linewidth=0.5)
+    n, bins, patches = ax.hist(data, bins=50, color='steelblue', edgecolor='black', alpha=0.7, linewidth=0.5)
     
     # Color bars by distance
     cm = plt.cm.RdYlGn_r
@@ -96,14 +87,10 @@ def plot_distance_histogram(df, col='dist_to_bathroom_m', title='Distance Distri
     mean_dist = data.mean()
     median_dist = data.median()
     
-    ax.axvline(mean_dist, color='blue', linestyle='-', linewidth=2.5, 
-               label=f'Mean: {mean_dist:.0f}m', alpha=0.8)
-    ax.axvline(median_dist, color='green', linestyle='-', linewidth=2.5, 
-               label=f'Median: {median_dist:.0f}m', alpha=0.8)
-    ax.axvline(500, color='red', linestyle='--', linewidth=2, 
-               label='500m threshold', alpha=0.7)
-    ax.axvline(800, color='orange', linestyle='--', linewidth=2, 
-               label='800m threshold', alpha=0.7)
+    ax.axvline(mean_dist, color='blue', linestyle='-', linewidth=2.5, label=f'Mean: {mean_dist:.0f}m', alpha=0.8)
+    ax.axvline(median_dist, color='green', linestyle='-', linewidth=2.5, label=f'Median: {median_dist:.0f}m', alpha=0.8)
+    ax.axvline(500, color='red', linestyle='--', linewidth=2, label='500m threshold', alpha=0.7)
+    ax.axvline(800, color='orange', linestyle='--', linewidth=2, label='800m threshold', alpha=0.7)
     
     ax.set_xlabel(f'{col.replace("_", " ").title()}', fontsize=13)
     ax.set_ylabel('Frequency', fontsize=13)
@@ -128,15 +115,12 @@ def plot_cluster_bar_chart(df, cluster_col='kmeans_cluster', title='Cluster Size
     cluster_counts = df[cluster_col].value_counts().sort_index()
     colors = sns.color_palette('viridis', len(cluster_counts))
     
-    bars = ax.bar(cluster_counts.index, cluster_counts.values, 
-                   color=colors, edgecolor='black', alpha=0.8, linewidth=1.5)
+    bars = ax.bar(cluster_counts.index, cluster_counts.values, color=colors, edgecolor='black', alpha=0.8, linewidth=1.5)
     
     # Add value labels on bars
     for bar in bars:
         height = bar.get_height()
-        ax.text(bar.get_x() + bar.get_width()/2., height,
-                f'{int(height)}',
-                ha='center', va='bottom', fontsize=10, fontweight='bold')
+        ax.text(bar.get_x() + bar.get_width()/2., height, f'{int(height)}', ha='center', va='bottom', fontsize=10, fontweight='bold')
     
     ax.set_xlabel('Cluster ID', fontsize=13)
     ax.set_ylabel('Count', fontsize=13)
@@ -189,15 +173,7 @@ def create_folium_cluster_map(df, cluster_col='kmeans_cluster', title='Cluster M
         color = colors[cluster % len(colors)] if cluster != -1 else 'black'
         
         for _, row in cluster_data.iterrows():
-            folium.CircleMarker(
-                location=[row['latitude'], row['longitude']],
-                radius=5,
-                popup=f"Cluster {cluster}",
-                color=color,
-                fill=True,
-                fillColor=color,
-                fillOpacity=0.6
-            ).add_to(m)
+            folium.CircleMarker(location=[row['latitude'], row['longitude']], radius=5, popup=f"Cluster {cluster}", color=color, fill=True, fillColor=color, fillOpacity=0.6).add_to(m)
     
     if save_path:
         m.save(save_path)
@@ -216,31 +192,13 @@ def create_multi_layer_map(needle_df, encampment_df, bathroom_df, save_path=None
     bathroom_layer = folium.FeatureGroup(name='Bathrooms', show=True)
     
     for _, row in needle_df.sample(min(1000, len(needle_df))).iterrows():
-        folium.CircleMarker(
-            location=[row['latitude'], row['longitude']],
-            radius=3,
-            color='red',
-            fill=True,
-            fillOpacity=0.4,
-            popup='Needle Case'
-        ).add_to(needle_layer)
+        folium.CircleMarker(location=[row['latitude'], row['longitude']], radius=3, color='red', fill=True, fillOpacity=0.4, popup='Needle Case').add_to(needle_layer)
     
     for _, row in encampment_df.iterrows():
-        folium.CircleMarker(
-            location=[row['latitude'], row['longitude']],
-            radius=5,
-            color='orange',
-            fill=True,
-            fillOpacity=0.6,
-            popup='Encampment'
-        ).add_to(encampment_layer)
+        folium.CircleMarker(location=[row['latitude'], row['longitude']], radius=5, color='orange', fill=True, fillOpacity=0.6, popup='Encampment').add_to(encampment_layer)
     
     for _, row in bathroom_df.iterrows():
-        folium.Marker(
-            location=[row['latitude'], row['longitude']],
-            icon=folium.Icon(color='blue', icon='tint', prefix='fa'),
-            popup='Bathroom'
-        ).add_to(bathroom_layer)
+        folium.Marker(location=[row['latitude'], row['longitude']], icon=folium.Icon(color='blue', icon='tint', prefix='fa'), popup='Bathroom').add_to(bathroom_layer)
     
     needle_layer.add_to(m)
     encampment_layer.add_to(m)
@@ -328,9 +286,9 @@ def create_spatiotemporal_map(df, date_col='opened', title='Spatio-Temporal Map'
     # Add neighborhood column if available for popups
     has_neighborhood = 'neighborhood' in df_temp.columns
     
-    print(f"    Generating cumulative features for {len(df_temp):,} incidents across {len(time_periods)} periods...")
+    print(f"    Generating cumulative features for {len(df_temp):,} incidents across {len(time_periods)} periods")
     
-    # Create GeoJSON features for TimestampedGeoJson with CUMULATIVE display
+    # Create GeoJSON features for TimestampedGeoJson with cumulative display
     # Each incident is duplicated across all future time periods to create accumulation effect
     features = []
     
@@ -365,7 +323,7 @@ def create_spatiotemporal_map(df, date_col='opened', title='Spatio-Temporal Map'
                     'popup': popup_text,
                     'icon': 'circle',
                     'iconstyle': {
-                        'fillColor': hex_color,  # Keep original color
+                        'fillColor': hex_color,
                         'fillOpacity': 0.6,
                         'stroke': 'true',
                         'radius': 5,
@@ -377,20 +335,7 @@ def create_spatiotemporal_map(df, date_col='opened', title='Spatio-Temporal Map'
             features.append(feature)
     
     # Create TimestampedGeoJson
-    timestamped_geojson = TimestampedGeoJson(
-        {
-            'type': 'FeatureCollection',
-            'features': features
-        },
-        period=f'P1{time_period[0].upper()}',  # P1M for month, P1Q for quarter, P1Y for year
-        auto_play=False,
-        loop=False,
-        max_speed=2,
-        loop_button=True,
-        date_options='YYYY-MM',
-        time_slider_drag_update=True,
-        duration='P1D'  # How long each period displays
-    )
+    timestamped_geojson = TimestampedGeoJson({'type': 'FeatureCollection', 'features': features}, period=f'P1{time_period[0].upper()}', auto_play=False, loop=False, max_speed=2, loop_button=True, date_options='YYYY-MM', time_slider_drag_update=True, duration='P1D')
     
     timestamped_geojson.add_to(m)
     
@@ -459,20 +404,9 @@ def create_spatiotemporal_map(df, date_col='opened', title='Spatio-Temporal Map'
     
     return m
 
-
-# ==================== TEMPORAL VISUALIZATIONS ==
+# Temporal visualizations
 
 def plot_time_series(df, date_col='opened', title='Time Series', save_path=None, freq='D'):
-    """
-    Plot time series of incident counts over time.
-    
-    Parameters:
-    - df: DataFrame with datetime column
-    - date_col: Name of datetime column
-    - title: Plot title
-    - save_path: Path to save figure
-    - freq: Frequency for resampling ('D'=daily, 'W'=weekly, 'M'/'ME'=monthly)
-    """
     df_temp = df.copy()
     df_temp[date_col] = pd.to_datetime(df_temp[date_col], errors='coerce')
     df_temp = df_temp.dropna(subset=[date_col])
@@ -481,7 +415,6 @@ def plot_time_series(df, date_col='opened', title='Time Series', save_path=None,
         print(f"No valid dates in {date_col}")
         return None
     
-    # Use 'ME' for monthly frequency in newer pandas
     if freq == 'M':
         try:
             ts = df_temp.set_index(date_col).resample('ME').size()
@@ -497,8 +430,7 @@ def plot_time_series(df, date_col='opened', title='Time Series', save_path=None,
     # Add moving average
     window = 7 if freq == 'D' else 4
     ma = ts.rolling(window=window, center=True).mean()
-    ax.plot(ma.index, ma.values, linewidth=3, color='coral', 
-            label=f'{window}-period Moving Avg', linestyle='--')
+    ax.plot(ma.index, ma.values, linewidth=3, color='coral', label=f'{window}-period Moving Avg', linestyle='--')
     
     ax.set_xlabel('Date', fontsize=13)
     ax.set_ylabel('Count', fontsize=13)
@@ -517,9 +449,7 @@ def plot_time_series(df, date_col='opened', title='Time Series', save_path=None,
     
     return fig
 
-
 def plot_monthly_trends(df, date_col='opened', title='Monthly Trends', save_path=None):
-    """Plot monthly aggregated data with trend line."""
     df_temp = df.copy()
     df_temp[date_col] = pd.to_datetime(df_temp[date_col], errors='coerce')
     df_temp = df_temp.dropna(subset=[date_col])
@@ -527,7 +457,6 @@ def plot_monthly_trends(df, date_col='opened', title='Monthly Trends', save_path
     if len(df_temp) == 0:
         return None
     
-    # Monthly counts - use 'ME' for month end (newer pandas versions)
     try:
         monthly = df_temp.set_index(date_col).resample('ME').size()
     except ValueError:
@@ -536,8 +465,7 @@ def plot_monthly_trends(df, date_col='opened', title='Monthly Trends', save_path
     fig, ax = plt.subplots(figsize=(16, 7))
     
     # Bar plot
-    bars = ax.bar(monthly.index, monthly.values, width=20, 
-                   color='teal', alpha=0.7, edgecolor='black', linewidth=0.5)
+    bars = ax.bar(monthly.index, monthly.values, width=20, color='teal', alpha=0.7, edgecolor='black', linewidth=0.5)
     
     # Color bars by value
     colors = plt.cm.RdYlGn_r(np.linspace(0.3, 0.9, len(monthly)))
@@ -548,8 +476,7 @@ def plot_monthly_trends(df, date_col='opened', title='Monthly Trends', save_path
     x_numeric = np.arange(len(monthly))
     z = np.polyfit(x_numeric, monthly.values, 2)
     p = np.poly1d(z)
-    ax.plot(monthly.index, p(x_numeric), linewidth=3, 
-            color='darkblue', linestyle='--', label='Trend', alpha=0.8)
+    ax.plot(monthly.index, p(x_numeric), linewidth=3, color='darkblue', linestyle='--', label='Trend', alpha=0.8)
     
     ax.set_xlabel('Month', fontsize=13)
     ax.set_ylabel('Count', fontsize=13)
@@ -568,9 +495,7 @@ def plot_monthly_trends(df, date_col='opened', title='Monthly Trends', save_path
     
     return fig
 
-
 def plot_day_of_week_pattern(df, date_col='opened', title='Day of Week Pattern', save_path=None):
-    """Analyze and visualize patterns by day of week."""
     df_temp = df.copy()
     df_temp[date_col] = pd.to_datetime(df_temp[date_col], errors='coerce')
     df_temp = df_temp.dropna(subset=[date_col])
@@ -588,15 +513,12 @@ def plot_day_of_week_pattern(df, date_col='opened', title='Day of Week Pattern',
     fig, ax = plt.subplots(figsize=(12, 6))
     
     colors = sns.color_palette("coolwarm", len(day_counts))
-    bars = ax.bar(day_counts['day_name'], day_counts['count'], 
-                   color=colors, edgecolor='black', linewidth=1.5, alpha=0.8)
+    bars = ax.bar(day_counts['day_name'], day_counts['count'], color=colors, edgecolor='black', linewidth=1.5, alpha=0.8)
     
     # Add value labels on bars
     for bar in bars:
         height = bar.get_height()
-        ax.text(bar.get_x() + bar.get_width()/2., height,
-                f'{int(height)}',
-                ha='center', va='bottom', fontsize=11, fontweight='bold')
+        ax.text(bar.get_x() + bar.get_width()/2., height, f'{int(height)}', ha='center', va='bottom', fontsize=11, fontweight='bold')
     
     ax.set_xlabel('Day of Week', fontsize=13)
     ax.set_ylabel('Count', fontsize=13)
@@ -615,7 +537,6 @@ def plot_day_of_week_pattern(df, date_col='opened', title='Day of Week Pattern',
 
 
 def plot_hour_of_day_pattern(df, date_col='opened', title='Hour of Day Pattern', save_path=None):
-    """Analyze and visualize patterns by hour of day."""
     df_temp = df.copy()
     df_temp[date_col] = pd.to_datetime(df_temp[date_col], errors='coerce')
     df_temp = df_temp.dropna(subset=[date_col])
@@ -631,8 +552,7 @@ def plot_hour_of_day_pattern(df, date_col='opened', title='Hour of Day Pattern',
     # Create color gradient
     colors = plt.cm.plasma(np.linspace(0, 1, 24))
     
-    bars = ax.bar(hour_counts.index, hour_counts.values, 
-                   color=colors, edgecolor='black', linewidth=0.5, alpha=0.8)
+    bars = ax.bar(hour_counts.index, hour_counts.values, color=colors, edgecolor='black', linewidth=0.5, alpha=0.8)
     
     # Highlight peak hours
     max_hour = hour_counts.idxmax()
@@ -664,9 +584,7 @@ def plot_hour_of_day_pattern(df, date_col='opened', title='Hour of Day Pattern',
     
     return fig
 
-
 def plot_seasonal_pattern(df, date_col='opened', title='Seasonal Pattern', save_path=None):
-    """Analyze and visualize seasonal patterns (by month)."""
     df_temp = df.copy()
     df_temp[date_col] = pd.to_datetime(df_temp[date_col], errors='coerce')
     df_temp = df_temp.dropna(subset=[date_col])
@@ -682,10 +600,7 @@ def plot_seasonal_pattern(df, date_col='opened', title='Seasonal Pattern', save_
     month_counts = month_counts.sort_values('month')
     
     # Create a complete 12-month dataset with zeros for missing months
-    all_months = pd.DataFrame({
-        'month': range(1, 13),
-        'month_name': [calendar.month_name[i] for i in range(1, 13)]
-    })
+    all_months = pd.DataFrame({'month': range(1, 13), 'month_name': [calendar.month_name[i] for i in range(1, 13)]})
     month_counts_complete = all_months.merge(month_counts, on=['month', 'month_name'], how='left')
     month_counts_complete['count'] = month_counts_complete['count'].fillna(0)
     
@@ -693,8 +608,7 @@ def plot_seasonal_pattern(df, date_col='opened', title='Seasonal Pattern', save_
     
     # Bar chart
     colors = sns.color_palette("Spectral", 12)
-    axes[0].bar(month_counts_complete['month_name'], month_counts_complete['count'], 
-                color=colors, edgecolor='black', linewidth=1, alpha=0.8)
+    axes[0].bar(month_counts_complete['month_name'], month_counts_complete['count'], color=colors, edgecolor='black', linewidth=1, alpha=0.8)
     axes[0].set_xlabel('Month', fontsize=13)
     axes[0].set_ylabel('Count', fontsize=13)
     axes[0].set_title(f'{title} - Bar Chart', fontsize=14, fontweight='bold')
@@ -706,8 +620,6 @@ def plot_seasonal_pattern(df, date_col='opened', title='Seasonal Pattern', save_
     width = 2*np.pi / 12
     
     ax_polar = plt.subplot(122, projection='polar')
-    bars = ax_polar.bar(theta, month_counts_complete['count'], width=width, 
-                         color=colors, edgecolor='black', linewidth=1, alpha=0.8)
     ax_polar.set_theta_zero_location('N')
     ax_polar.set_theta_direction(-1)
     ax_polar.set_xticks(theta)
@@ -726,7 +638,6 @@ def plot_seasonal_pattern(df, date_col='opened', title='Seasonal Pattern', save_
 
 
 def plot_calendar_heatmap(df, date_col='opened', title='Calendar Heatmap', save_path=None):
-    """Create a calendar heatmap showing daily counts."""
     df_temp = df.copy()
     df_temp[date_col] = pd.to_datetime(df_temp[date_col], errors='coerce')
     df_temp = df_temp.dropna(subset=[date_col])
@@ -738,10 +649,7 @@ def plot_calendar_heatmap(df, date_col='opened', title='Calendar Heatmap', save_
     daily = df_temp.set_index(date_col).resample('D').size()
     
     # Create pivot table for heatmap
-    df_heatmap = pd.DataFrame({
-        'date': daily.index,
-        'count': daily.values
-    })
+    df_heatmap = pd.DataFrame({'date': daily.index,'count': daily.values})
     df_heatmap['year'] = df_heatmap['date'].dt.year
     df_heatmap['month'] = df_heatmap['date'].dt.month
     df_heatmap['day'] = df_heatmap['date'].dt.day
@@ -754,9 +662,7 @@ def plot_calendar_heatmap(df, date_col='opened', title='Calendar Heatmap', save_
     
     fig, ax = plt.subplots(figsize=(14, 10))
     
-    sns.heatmap(pivot, cmap='YlOrRd', annot=False, fmt='d', 
-                linewidths=0.5, cbar_kws={'label': 'Count'},
-                ax=ax, robust=True)
+    sns.heatmap(pivot, cmap='YlOrRd', annot=False, fmt='d', linewidths=0.5, cbar_kws={'label': 'Count'}, ax=ax, robust=True)
     
     ax.set_xlabel('Month', fontsize=13)
     ax.set_ylabel('Day of Month', fontsize=13)
@@ -775,7 +681,6 @@ def plot_calendar_heatmap(df, date_col='opened', title='Calendar Heatmap', save_
         plt.show()
     
     return fig
-
 
 def plot_temporal_neighborhood_comparison(df, date_col='opened', neighborhood_col='neighborhood', title='Neighborhood Comparison Over Time', save_path=None):
     df_temp = df.copy()
@@ -799,8 +704,7 @@ def plot_temporal_neighborhood_comparison(df, date_col='opened', neighborhood_co
     # Plot each neighborhood
     for neighborhood in top_neighborhoods:
         data = monthly_neighborhood[monthly_neighborhood[neighborhood_col] == neighborhood]
-        ax.plot(data['year_month'], data['count'], 
-                marker='o', linewidth=2, alpha=0.7, label=neighborhood)
+        ax.plot(data['year_month'], data['count'], marker='o', linewidth=2, alpha=0.7, label=neighborhood)
     
     ax.set_xlabel('Month', fontsize=13)
     ax.set_ylabel('Count', fontsize=13)
@@ -818,7 +722,6 @@ def plot_temporal_neighborhood_comparison(df, date_col='opened', neighborhood_co
         plt.show()
     
     return fig
-
 
 def plot_yearly_comparison(df, date_col='opened', title='Year-over-Year Comparison', save_path=None):
     df_temp = df.copy()
@@ -841,9 +744,7 @@ def plot_yearly_comparison(df, date_col='opened', title='Year-over-Year Comparis
     
     for i, year in enumerate(years):
         data = yearly_monthly[yearly_monthly['year'] == year]
-        ax.plot(data['month'], data['count'], 
-                marker='o', linewidth=2.5, alpha=0.8, 
-                label=year, color=colors[i], markersize=8)
+        ax.plot(data['month'], data['count'], marker='o', linewidth=2.5, alpha=0.8, label=year, color=colors[i], markersize=8)
     
     ax.set_xlabel('Month', fontsize=13)
     ax.set_ylabel('Count', fontsize=13)
@@ -865,7 +766,6 @@ def plot_yearly_comparison(df, date_col='opened', title='Year-over-Year Comparis
 
 
 def create_interactive_temporal_plot(df, date_col='opened', title='Interactive Time Series', save_path=None):
-    """Create an interactive plotly time series visualization."""
     df_temp = df.copy()
     df_temp[date_col] = pd.to_datetime(df_temp[date_col], errors='coerce')
     df_temp = df_temp.dropna(subset=[date_col])
@@ -877,30 +777,14 @@ def create_interactive_temporal_plot(df, date_col='opened', title='Interactive T
     daily = df_temp.set_index(date_col).resample('D').size().reset_index(name='count')
     
     # Create figure with subplots
-    fig = make_subplots(
-        rows=2, cols=1,
-        subplot_titles=('Daily Incident Count', 'Cumulative Count'),
-        row_heights=[0.6, 0.4],
-        vertical_spacing=0.12
-    )
+    fig = make_subplots(rows=2, cols=1, subplot_titles=('Daily Incident Count', 'Cumulative Count'), row_heights=[0.6, 0.4], vertical_spacing=0.12)
     
     # Daily counts
-    fig.add_trace(
-        go.Scatter(x=daily[date_col], y=daily['count'],
-                   mode='lines', name='Daily Count',
-                   line=dict(color='steelblue', width=2),
-                   fill='tozeroy', fillcolor='rgba(70, 130, 180, 0.3)'),
-        row=1, col=1
-    )
+    fig.add_trace(go.Scatter(x=daily[date_col], y=daily['count'], mode='lines', name='Daily Count', line=dict(color='steelblue', width=2), fill='tozeroy', fillcolor='rgba(70, 130, 180, 0.3)'), row=1, col=1)
     
     # Cumulative
     daily['cumulative'] = daily['count'].cumsum()
-    fig.add_trace(
-        go.Scatter(x=daily[date_col], y=daily['cumulative'],
-                   mode='lines', name='Cumulative',
-                   line=dict(color='coral', width=3)),
-        row=2, col=1
-    )
+    fig.add_trace(go.Scatter(x=daily[date_col], y=daily['cumulative'], mode='lines', name='Cumulative', line=dict(color='coral', width=3)), row=2, col=1)
     
     fig.update_xaxes(title_text="Date", row=2, col=1)
     fig.update_yaxes(title_text="Count", row=1, col=1)
@@ -920,9 +804,7 @@ def create_interactive_temporal_plot(df, date_col='opened', title='Interactive T
     return fig
 
 
-def plot_status_comparison(df, date_col='opened', status_col='status', 
-                          title='Status Comparison Over Time', save_path=None):
-    """Compare open vs closed status over time."""
+def plot_status_comparison(df, date_col='opened', status_col='status', title='Status Comparison Over Time', save_path=None):
     df_temp = df.copy()
     df_temp[date_col] = pd.to_datetime(df_temp[date_col], errors='coerce')
     df_temp = df_temp.dropna(subset=[date_col])
@@ -938,14 +820,12 @@ def plot_status_comparison(df, date_col='opened', status_col='status',
     fig, ax = plt.subplots(figsize=(16, 7))
     
     # Stacked area chart
-    status_monthly.plot(kind='area', ax=ax, alpha=0.7, linewidth=2, 
-                       color=['#2ecc71', '#e74c3c'], stacked=True)
+    status_monthly.plot(kind='area', ax=ax, alpha=0.7, linewidth=2, color=['#2ecc71', '#e74c3c'], stacked=True)
     
     ax.set_xlabel('Month', fontsize=13)
     ax.set_ylabel('Count', fontsize=13)
     ax.set_title(title, fontsize=15, fontweight='bold', pad=20)
-    ax.legend(title='Status', fontsize=11, title_fontsize=12, 
-             loc='upper left', frameon=True, fancybox=True, shadow=True)
+    ax.legend(title='Status', fontsize=11, title_fontsize=12, loc='upper left', frameon=True, fancybox=True, shadow=True)
     ax.grid(True, alpha=0.3, linestyle='--')
     
     plt.xticks(rotation=45)
@@ -959,9 +839,7 @@ def plot_status_comparison(df, date_col='opened', status_col='status',
     
     return fig
 
-
 def plot_spatial_temporal_stats(df, date_col='opened', title='Spatial-Temporal Statistics', save_path=None):
-    """Create a dashboard of spatial and temporal statistics."""
     df_temp = df.copy()
     df_temp[date_col] = pd.to_datetime(df_temp[date_col], errors='coerce')
     df_temp = df_temp.dropna(subset=[date_col])
@@ -974,9 +852,7 @@ def plot_spatial_temporal_stats(df, date_col='opened', title='Spatial-Temporal S
     
     # 1. Distance to bathroom distribution box plot
     if 'dist_to_bathroom_m' in df_temp.columns:
-        df_temp['dist_to_bathroom_m'].dropna().plot(kind='box', ax=axes[0, 0], 
-                                                     patch_artist=True, vert=False,
-                                                     boxprops=dict(facecolor='lightblue', alpha=0.7))
+        df_temp['dist_to_bathroom_m'].dropna().plot(kind='box', ax=axes[0, 0], patch_artist=True, vert=False, boxprops=dict(facecolor='lightblue', alpha=0.7))
         axes[0, 0].set_xlabel('Distance (m)', fontsize=12)
         axes[0, 0].set_title('Distance to Bathroom Distribution', fontsize=13, fontweight='bold')
         axes[0, 0].grid(True, alpha=0.3)
@@ -996,8 +872,7 @@ def plot_spatial_temporal_stats(df, date_col='opened', title='Spatial-Temporal S
         monthly = df_temp.set_index(date_col).resample('ME').size()
     except ValueError:
         monthly = df_temp.set_index(date_col).resample('M').size()
-    axes[1, 0].plot(monthly.index, monthly.values, marker='o', 
-                   linewidth=2.5, color='coral', markersize=6)
+    axes[1, 0].plot(monthly.index, monthly.values, marker='o', linewidth=2.5, color='coral', markersize=6)
     axes[1, 0].fill_between(monthly.index, monthly.values, alpha=0.3, color='coral')
     axes[1, 0].set_xlabel('Month', fontsize=12)
     axes[1, 0].set_ylabel('Count', fontsize=12)
@@ -1041,9 +916,7 @@ def plot_spatial_temporal_stats(df, date_col='opened', title='Spatial-Temporal S
     Underserved Areas: {underserved_pct:.1f}% of incidents
         """
     
-    axes[1, 1].text(0.1, 0.9, stats_text, transform=axes[1, 1].transAxes,
-                   fontsize=11, verticalalignment='top', family='monospace',
-                   bbox=dict(boxstyle='round', facecolor='wheat', alpha=0.5))
+    axes[1, 1].text(0.1, 0.9, stats_text, transform=axes[1, 1].transAxes, fontsize=11, verticalalignment='top', family='monospace', bbox=dict(boxstyle='round', facecolor='wheat', alpha=0.5))
     
     plt.tight_layout()
     
@@ -1055,9 +928,7 @@ def plot_spatial_temporal_stats(df, date_col='opened', title='Spatial-Temporal S
     
     return fig
 
-
 def plot_correlation_heatmap(df, title='Feature Correlation Heatmap', save_path=None):
-    """Create a correlation heatmap of numerical features."""
     # Select numerical columns
     numerical_cols = df.select_dtypes(include=[np.number]).columns.tolist()
     
@@ -1072,10 +943,7 @@ def plot_correlation_heatmap(df, title='Feature Correlation Heatmap', save_path=
     
     fig, ax = plt.subplots(figsize=(12, 10))
     
-    sns.heatmap(correlation, annot=True, fmt='.2f', cmap='coolwarm', 
-                center=0, square=True, linewidths=1, 
-                cbar_kws={'label': 'Correlation'}, ax=ax,
-                vmin=-1, vmax=1)
+    sns.heatmap(correlation, annot=True, fmt='.2f', cmap='coolwarm', center=0, square=True, linewidths=1, cbar_kws={'label': 'Correlation'}, ax=ax, vmin=-1, vmax=1)
     
     ax.set_title(title, fontsize=15, fontweight='bold', pad=20)
     plt.xticks(rotation=45, ha='right')
@@ -1090,127 +958,88 @@ def plot_correlation_heatmap(df, title='Feature Correlation Heatmap', save_path=
     
     return fig
 
-
 def generate_all_visualizations(needle_df, encampment_df, bathroom_df):
     output_dir = Path("outputs/figures")
     output_dir.mkdir(parents=True, exist_ok=True)
     
-    print("\n" + "="*60)
-    print("GENERATING COMPREHENSIVE VISUALIZATIONS")
-    print("="*60)
+    print("\n")
+    print("GENERATING VISUALIZATIONS")
     
-    # ==================== SPATIAL VISUALIZATIONS ====================
-    print("\n[1/4] Generating needle case visualizations...")
+    # Spaial visualizations
+    print("\n[1/4] Generating needle case visualizations")
     plot_spatial_distribution(needle_df, 'Needle Cases Distribution', output_dir / 'needles_distribution.png')
     plot_cluster_scatter(needle_df, 'kmeans_cluster', 'Needle Cases - K-Means Clusters', output_dir / 'needles_kmeans.png')
     plot_cluster_scatter(needle_df, 'dbscan_cluster', 'Needle Cases - DBSCAN Clusters', output_dir / 'needles_dbscan.png')
     plot_distance_histogram(needle_df, 'dist_to_bathroom_m', 'Needle Distance to Bathrooms', output_dir / 'needles_distance_hist.png')
     plot_cluster_bar_chart(needle_df, 'kmeans_cluster', 'Needle K-Means Cluster Sizes', output_dir / 'needles_cluster_sizes.png')
     
-    print("[2/4] Generating encampment visualizations...")
+    print("[2/4] Generating encampment visualizations")
     plot_spatial_distribution(encampment_df, 'Homeless Encampments Distribution', output_dir / 'encampments_distribution.png')
     plot_cluster_scatter(encampment_df, 'kmeans_cluster', 'Encampments - K-Means Clusters', output_dir / 'encampments_kmeans.png')
     plot_distance_histogram(encampment_df, 'dist_to_bathroom_m', 'Encampment Distance to Bathrooms', output_dir / 'encampments_distance_hist.png')
     
-    print("[3/4] Generating bathroom visualizations...")
+    print("[3/4] Generating bathroom visualizations")
     plot_spatial_distribution(bathroom_df, 'Public Bathrooms Distribution', output_dir / 'bathrooms_distribution.png')
     plot_cluster_scatter(bathroom_df, 'kmeans_cluster', 'Bathrooms - K-Means Clusters', output_dir / 'bathrooms_kmeans.png')
     
-    # ==================== TEMPORAL VISUALIZATIONS ====================
-    print("\n[4/4] Generating temporal visualizations...")
+    # temporal visualizations
+    print("\n[4/4] Generating temporal visualizations")
     
     # Needle cases temporal analysis
     if 'opened' in needle_df.columns:
-        print("  - Needle cases temporal analysis...")
-        plot_time_series(needle_df, 'opened', 'Needle Cases - Daily Time Series', 
-                        output_dir / 'needles_timeseries_daily.png', freq='D')
-        plot_time_series(needle_df, 'opened', 'Needle Cases - Weekly Time Series', 
-                        output_dir / 'needles_timeseries_weekly.png', freq='W')
-        plot_monthly_trends(needle_df, 'opened', 'Needle Cases - Monthly Trends', 
-                           output_dir / 'needles_monthly_trends.png')
-        plot_day_of_week_pattern(needle_df, 'opened', 'Needle Cases - Day of Week Pattern', 
-                                output_dir / 'needles_day_of_week.png')
-        plot_hour_of_day_pattern(needle_df, 'opened', 'Needle Cases - Hour of Day Pattern', 
-                                output_dir / 'needles_hour_of_day.png')
-        plot_seasonal_pattern(needle_df, 'opened', 'Needle Cases - Seasonal Pattern', 
-                             output_dir / 'needles_seasonal.png')
-        plot_calendar_heatmap(needle_df, 'opened', 'Needle Cases - Calendar Heatmap', 
-                             output_dir / 'needles_calendar_heatmap.png')
-        plot_yearly_comparison(needle_df, 'opened', 'Needle Cases - Year-over-Year', 
-                              output_dir / 'needles_yearly_comparison.png')
+        print("  - Needle cases temporal analysis")
+        plot_time_series(needle_df, 'opened', 'Needle Cases - Daily Time Series', output_dir / 'needles_timeseries_daily.png', freq='D')
+        plot_time_series(needle_df, 'opened', 'Needle Cases - Weekly Time Series', output_dir / 'needles_timeseries_weekly.png', freq='W')
+        plot_monthly_trends(needle_df, 'opened', 'Needle Cases - Monthly Trends', output_dir / 'needles_monthly_trends.png')
+        plot_day_of_week_pattern(needle_df, 'opened', 'Needle Cases - Day of Week Pattern', output_dir / 'needles_day_of_week.png')
+        plot_hour_of_day_pattern(needle_df, 'opened', 'Needle Cases - Hour of Day Pattern', output_dir / 'needles_hour_of_day.png')
+        plot_seasonal_pattern(needle_df, 'opened', 'Needle Cases - Seasonal Pattern', output_dir / 'needles_seasonal.png')
+        plot_calendar_heatmap(needle_df, 'opened', 'Needle Cases - Calendar Heatmap', output_dir / 'needles_calendar_heatmap.png')
+        plot_yearly_comparison(needle_df, 'opened', 'Needle Cases - Year-over-Year', output_dir / 'needles_yearly_comparison.png')
         
         if 'neighborhood' in needle_df.columns:
-            plot_temporal_neighborhood_comparison(needle_df, 'opened', 'neighborhood',
-                                                 'Needle Cases - Neighborhood Trends', 
-                                                 output_dir / 'needles_neighborhood_temporal.png')
+            plot_temporal_neighborhood_comparison(needle_df, 'opened', 'neighborhood','Needle Cases - Neighborhood Trends', output_dir / 'needles_neighborhood_temporal.png')
         
         # Interactive temporal plot
-        create_interactive_temporal_plot(needle_df, 'opened', 
-                                        'Needle Cases - Interactive Time Series',
-                                        output_dir / 'needles_interactive_temporal.html')
+        create_interactive_temporal_plot(needle_df, 'opened', 'Needle Cases - Interactive Time Series', output_dir / 'needles_interactive_temporal.html')
         
         # Status comparison (Open vs Closed)
         if 'status' in needle_df.columns:
-            plot_status_comparison(needle_df, 'opened', 'status',
-                                  'Needle Cases - Status Over Time',
-                                  output_dir / 'needles_status_comparison.png')
+            plot_status_comparison(needle_df, 'opened', 'status','Needle Cases - Status Over Time', output_dir / 'needles_status_comparison.png')
         
         # Spatial-temporal statistics dashboard
-        plot_spatial_temporal_stats(needle_df, 'opened', 
-                                   'Needle Cases - Statistics Dashboard',
-                                   output_dir / 'needles_stats_dashboard.png')
+        plot_spatial_temporal_stats(needle_df, 'opened', 'Needle Cases - Statistics Dashboard', output_dir / 'needles_stats_dashboard.png')
     
     # Encampment temporal analysis
     if 'observed_month' in encampment_df.columns:
         print("  - Encampment temporal analysis...")
-        plot_time_series(encampment_df, 'observed_month', 
-                        'Encampments - Time Series', 
-                        output_dir / 'encampments_timeseries.png', freq='M')
-        plot_monthly_trends(encampment_df, 'observed_month', 
-                           'Encampments - Monthly Trends', 
-                           output_dir / 'encampments_monthly_trends.png')
-        plot_seasonal_pattern(encampment_df, 'observed_month', 
-                             'Encampments - Seasonal Pattern', 
-                             output_dir / 'encampments_seasonal.png')
-        plot_yearly_comparison(encampment_df, 'observed_month', 
-                              'Encampments - Year-over-Year', 
-                              output_dir / 'encampments_yearly_comparison.png')
+        plot_time_series(encampment_df, 'observed_month', 'Encampments - Time Series', output_dir / 'encampments_timeseries.png', freq='M')
+        plot_monthly_trends(encampment_df, 'observed_month', 'Encampments - Monthly Trends', output_dir / 'encampments_monthly_trends.png')
+        plot_seasonal_pattern(encampment_df, 'observed_month', 'Encampments - Seasonal Pattern', output_dir / 'encampments_seasonal.png')
+        plot_yearly_comparison(encampment_df, 'observed_month', 'Encampments - Year-over-Year', output_dir / 'encampments_yearly_comparison.png')
         
         if 'sf_find_neighborhood' in encampment_df.columns:
-            plot_temporal_neighborhood_comparison(encampment_df, 'observed_month', 
-                                                 'sf_find_neighborhood',
-                                                 'Encampments - Neighborhood Trends', 
-                                                 output_dir / 'encampments_neighborhood_temporal.png')
+            plot_temporal_neighborhood_comparison(encampment_df, 'observed_month', 'sf_find_neighborhood','Encampments - Neighborhood Trends', output_dir / 'encampments_neighborhood_temporal.png')
         
         # Spatial-temporal statistics dashboard
-        plot_spatial_temporal_stats(encampment_df, 'observed_month', 
-                                   'Encampments - Statistics Dashboard',
-                                   output_dir / 'encampments_stats_dashboard.png')
+        plot_spatial_temporal_stats(encampment_df, 'observed_month', 'Encampments - Statistics Dashboard', output_dir / 'encampments_stats_dashboard.png')
     
-    # ==================== CORRELATION ANALYSIS ====================
+    # Corrolation
     print("\nGenerating correlation heatmaps...")
-    plot_correlation_heatmap(needle_df, 'Needle Cases - Feature Correlations',
-                            output_dir / 'needles_correlation.png')
-    plot_correlation_heatmap(encampment_df, 'Encampments - Feature Correlations',
-                            output_dir / 'encampments_correlation.png')
-    plot_correlation_heatmap(bathroom_df, 'Bathrooms - Feature Correlations',
-                            output_dir / 'bathrooms_correlation.png')
+    plot_correlation_heatmap(needle_df, 'Needle Cases - Feature Correlations', output_dir / 'needles_correlation.png')
+    plot_correlation_heatmap(encampment_df, 'Encampments - Feature Correlations', output_dir / 'encampments_correlation.png')
+    plot_correlation_heatmap(bathroom_df, 'Bathrooms - Feature Correlations', output_dir / 'bathrooms_correlation.png')
     
-    # ==================== INTERACTIVE MAPS ==
+    # Interactive maps
     print("\nGenerating interactive maps...")
     create_folium_heatmap(needle_df, 'Needle Heatmap', output_dir / 'needles_heatmap.html')
-    create_folium_cluster_map(needle_df, 'kmeans_cluster', 'Needle Clusters', 
-                              output_dir / 'needles_cluster_map.html')
-    create_multi_layer_map(needle_df, encampment_df, bathroom_df, 
-                          output_dir / 'combined_map.html')
+    create_folium_cluster_map(needle_df, 'kmeans_cluster', 'Needle Clusters', output_dir / 'needles_cluster_map.html')
+    create_multi_layer_map(needle_df, encampment_df, bathroom_df, output_dir / 'combined_map.html')
     
     # Spatio-temporal maps
     if 'opened' in needle_df.columns:
         print("  - Creating needle cases spatio-temporal map (monthly)...")
-        create_spatiotemporal_map(needle_df, 'opened', 
-                                 'Needle Cases - Evolution Over Time',
-                                 output_dir / 'needles_spatiotemporal.html',
-                                 time_period='month', max_points=5000)
+        create_spatiotemporal_map(needle_df, 'opened', 'Needle Cases - Evolution Over Time',output_dir / 'needles_spatiotemporal.html', time_period='month', max_points=5000)
     
     if 'observed_month' in encampment_df.columns:
         # Check if there's sufficient temporal variation
@@ -1219,17 +1048,4 @@ def generate_all_visualizations(needle_df, encampment_df, bathroom_df):
         
         if unique_periods >= 8:  # Need at least 8 quarters (~2 years) for meaningful timeline
             print("  - Creating encampments spatio-temporal map (quarterly)...")
-            create_spatiotemporal_map(encampment_df, 'observed_month',
-                                     'Encampments - Evolution Over Time',
-                                     output_dir / 'encampments_spatiotemporal.html',
-                                     time_period='quarter', max_points=800)
-        else:
-            print(f"  - Skipping encampments spatio-temporal map (only {unique_periods} time periods, need 8+ for meaningful timeline)")
-    
-    print("\n" + "="*60)
-    print(f"✓ All visualizations saved to: {output_dir.absolute()}")
-    print("="*60)
-    print(f"\nGenerated:")
-    print(f"  - {len(list(output_dir.glob('*.png')))} static visualizations (PNG)")
-    print(f"  - {len(list(output_dir.glob('*.html')))} interactive visualizations (HTML)")
-    print("="*60 + "\n")
+            create_spatiotemporal_map(encampment_df, 'observed_month', 'Encampments - Evolution Over Time', output_dir / 'encampments_spatiotemporal.html', time_period='quarter', max_points=800)

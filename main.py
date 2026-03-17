@@ -15,11 +15,7 @@ def main():
     print_dataset_info(homeless_encampments, 'homeless_encampments')
     print_dataset_info(bathrooms, 'bathrooms')
 
-
-
-    # Preprocessing
-
-
+    ### Preprocessing ###
 
     needle_cases_clean = preprocess_needle_cases(needle_cases)
     homeless_encampments_clean = preprocess_homeless_counts(homeless_encampments)
@@ -55,11 +51,7 @@ def main():
         spacial_encampment_dataset.drop(columns=['geometry']).to_csv(spacial_encampment_csv, index=False)
         spacial_bathroom_dataset.drop(columns=['geometry']).to_csv(spacial_bathroom_csv, index=False)
 
-
-
-    # Clustering
-    
-
+    ### Clustering ###
 
     # Load spatial data
     needle_spatial = pd.read_csv(spacial_needle_csv)
@@ -80,10 +72,7 @@ def main():
     
     # Clustering encampments
     print("Clustering homeless encampments")
-    encampment_features = prepare_clustering_features(
-        encampment_spatial,
-        ['latitude', 'longitude', 'dist_to_bathroom_m', 'needles_within_500m']
-    )
+    encampment_features = prepare_clustering_features(encampment_spatial, ['latitude', 'longitude', 'dist_to_bathroom_m', 'needles_within_500m'])
     encampment_kmeans_labels, _, _ = kmeans_clustering(encampment_features, n_clusters=6)
     encampment_dbscan_labels, _, _ = dbscan_clustering(encampment_features, eps=0.3, min_samples=10)
     
@@ -92,10 +81,7 @@ def main():
     
     # Clustering bathrooms
     print("Clustering bathrooms")
-    bathroom_features = prepare_clustering_features(
-        bathroom_spatial,
-        ['latitude', 'longitude', 'needles_within_500m', 'encampments_within_500m']
-    )
+    bathroom_features = prepare_clustering_features(bathroom_spatial, ['latitude', 'longitude', 'needles_within_500m', 'encampments_within_500m'])
     bathroom_kmeans_labels, _, _ = kmeans_clustering(bathroom_features, n_clusters=5)
     bathroom_dbscan_labels, _, _ = dbscan_clustering(bathroom_features, eps=0.4, min_samples=5)
     
@@ -116,12 +102,8 @@ def main():
     encampment_spatial.to_csv(clustered_dir / "homeless_encampments_clustered.csv", index=False)
     bathroom_spatial.to_csv(clustered_dir / "bathrooms_clustered.csv", index=False)
 
-
-
-    # Visualization
+    ### Visualization ###
     
-
-
     generate_all_visualizations(
         needle_spatial, 
         encampment_spatial, 

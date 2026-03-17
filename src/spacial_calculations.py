@@ -3,12 +3,10 @@ from shapely.geometry import Point
 from scipy.spatial import cKDTree
 import numpy as np
 
-
 def create_geodataframe(df, lat_col='latitude', lon_col='longitude'):
     geometry = [Point(xy) for xy in zip(df[lon_col], df[lat_col])]
     gdf = gpd.GeoDataFrame(df, geometry=geometry, crs='EPSG:4326')
     return gdf
-
 
 def prepare_geodataframes(needle_cases_clean, homeless_counts_clean, bathrooms_clean):
     needles_gdf = create_geodataframe(needle_cases_clean)
@@ -16,13 +14,11 @@ def prepare_geodataframes(needle_cases_clean, homeless_counts_clean, bathrooms_c
     bathrooms_gdf = create_geodataframe(bathrooms_clean)
     return needles_gdf, encampments_gdf, bathrooms_gdf
 
-
 def find_nearest_facility(target_gdf, facility_gdf):
     tree = cKDTree(np.array(list(facility_gdf.geometry.apply(lambda x: (x.x, x.y)))))
     distances, indices = tree.query(np.array(list(target_gdf.geometry.apply(lambda x: (x.x, x.y)))))
     distances_meters = distances * 111000 * np.cos(np.radians(37.77))
     return distances_meters, indices
-
 
 def count_facilities_within_radius(target_gdf, facility_gdf, radius=500):
     # Use vectorized operations for better performance
@@ -36,7 +32,6 @@ def count_facilities_within_radius(target_gdf, facility_gdf, radius=500):
     # Count facilities within radius for each target point
     counts = [len(tree.query_ball_point(point, radius_degrees)) for point in target_coords]
     return counts
-
 
 def integrate_spatial_data(needles_gdf, encampments_gdf, bathrooms_gdf):
     # Distances to nearest facilities
